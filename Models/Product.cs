@@ -7,7 +7,6 @@ namespace CodeWithArash.Models
 {
     public class Product
     {
-
         public Product() // constructor, makes every new product have an empty list of categories
         {
             Categories = new List<Category>();

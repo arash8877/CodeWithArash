@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CodeWithArash")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dfeccb8902dc6b73237eb17979f0b245b260346c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8dfc26f74aaea74e06870810ba3731c0981f408d")]
 [assembly: System.Reflection.AssemblyProductAttribute("CodeWithArash")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CodeWithArash")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

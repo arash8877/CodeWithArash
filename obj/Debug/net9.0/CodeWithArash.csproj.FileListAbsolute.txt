@@ -94,3 +94,4 @@
 /Users/elahe/Documents/Arash-code/Net/CodeWithArash/obj/Debug/net9.0/CodeWithArash.pdb
 /Users/elahe/Documents/Arash-code/Net/CodeWithArash/obj/Debug/net9.0/CodeWithArash.genruntimeconfig.cache
 /Users/elahe/Documents/Arash-code/Net/CodeWithArash/obj/Debug/net9.0/ref/CodeWithArash.dll
+/Users/elahe/Documents/Arash-code/Net/CodeWithArash/obj/Debug/net9.0/CodeWithArash.sourcelink.json

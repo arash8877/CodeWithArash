@@ -18,6 +18,12 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult ContactUs()
+    {
+        return View();
+    }
+
+    [Route("contact-us")] // this attribute decorates the action method, so that it can be accessed via /contact-us URL
     public IActionResult Privacy()
     {
         return View();

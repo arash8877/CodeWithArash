@@ -14,7 +14,35 @@ namespace CodeWithArash.Data
 
         public DbSet<Models.Category> Categories { get; set; } // DbSet create a table in db for Category model
 
-        // You can add more DbSet properties for other entities here
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            #region Seed Data for Category Table
+            modelBuilder.Entity<Models.Category>().HasData(new Models.Category
+            {
+                Id = 1,
+                Name = "ASP .NET Core 9",
+                Description = "All about ASP .NET Core and C# programming"
+            }, new Models.Category
+            {
+                Id = 2,
+                Name = "JavaScript",
+                Description = "All about JavaScript programming"
+            }, new Models.Category
+            { 
+                Id = 3,
+                Name = "Python",
+                Description = "All about Python programming"
+            }, new Models.Category
+            {
+                Id = 4,
+                Name = "Machine Learning",
+                Description = "All about Machine Learning"
+            }
+            );
+            #endregion
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
   

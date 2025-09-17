@@ -16,7 +16,7 @@ namespace CodeWithArash.Models
         public int BasketItemId { get; set; }
 
         // Navigation properties ( create relationship between Product and other tables)
-        public ICollection<ProductInCategories>? ProductInCategories { get; set; } // many to many relationship between product and category
+        public ICollection<ProductInCategories> ProductInCategories { get; set; } // many to many relationship between product and category
         public BasketItem? BasketItem { get; set; } // each product can be linked to one basket item
     }
 }

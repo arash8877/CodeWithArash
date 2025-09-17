@@ -1,7 +1,12 @@
+using CodeWithArash.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<CodeWithArashContext>(options =>
+    options.UseSqlite("Data Source=CodeWithArashDB.db"));
 
 var app = builder.Build();
 

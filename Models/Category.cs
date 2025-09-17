@@ -10,6 +10,7 @@ namespace CodeWithArash.Models
         public int Id { get; set; }
         public required string Name { get; set; }
         public required string Description { get; set; }
+        public required ICollection<ProductInCategories> ProductInCategories { get; set; } // many to many relationship between product and category
     
     }
 }

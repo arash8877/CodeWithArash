@@ -7,13 +7,13 @@ namespace CodeWithArash.Models
 {
     public class Product
     {
-        public Product() // constructor, makes every new product have an empty list of categories
-        {
-            Categories = new List<Category>();
-        }
+
         public int Id { get; set; }
         public required string Name { get; set; }
         public required string Description { get; set; }
-        public List<Category> Categories { get; set; } // the product can be in multiple categories
+
+        // Navigation properties ( create relationship between Product and other tables)
+        public required ICollection<ProductInCategories> ProductInCategories { get; set; } // many to many relationship between product and category
+        public required BasketItem BasketItem { get; set; } // each product can be linked to one basket item
     }
 }

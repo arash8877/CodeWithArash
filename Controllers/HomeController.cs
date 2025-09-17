@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using CodeWithArash.Models;
+using Microsoft.EntityFrameworkCore; 
 using CodeWithArash.Data;
 
 namespace CodeWithArash.Controllers;
@@ -24,16 +25,18 @@ public class HomeController : Controller
 
     public IActionResult ProductDetails(int id)
     {
-        var product = _context.Products.Find(id); // fetch product by id from the database
+        var product = _context.Products
+           .Include(p => p.BasketItem)
+           .SingleOrDefault(p => p.Id == id); // fetch product by id from the database
         if (product == null)
         {
             return NotFound(); // return 404 if product not found
         }
 
         var categories = _context.Products
-            .Where(p=> p.Id == id)
-            .SelectMany(c=> c.ProductInCategories)
-            .Select(c=> c.Category)
+            .Where(p => p.Id == id)
+            .SelectMany(c => c.ProductInCategories)
+            .Select(c => c.Category)
             .ToList(); // fetch categories associated with the product
 
         var viewModel = new ProductDetailsViewModel()
@@ -42,9 +45,15 @@ public class HomeController : Controller
             Categories = categories
         };
 
-
-        return View(viewModel); 
+        return View(viewModel);
     }
+
+    public IActionResult AddToBasket(int productId)
+    {
+        return null;
+    }
+
+
 
     public IActionResult ContactUs()
     {

@@ -1,0 +1,51 @@
+@model CodeWithArash.Models.ProductDetailsViewModel
+
+
+@{
+    ViewData["Title"] = Model.Product.Name;
+}
+
+
+
+<div class="container py-5">
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-md-5 text-center">
+            <img src="@($"/images/{Model.Product.Id}.jpg")"
+                 alt="@Model.Product.Name"
+                 class="img-fluid rounded shadow-sm mb-3" />
+        </div>
+
+        <!-- Product Info -->
+        <div class="col-md-7">
+            <h1 class="h3 fw-semibold mb-3">@Model.Product.Name</h1>
+            <p class="text-muted mb-4">@Model.Product.Description</p>
+
+            <h4 class="text-success fw-bold mb-3">
+                Price: @Model.Product.BasketItem.Price kr.
+            </h4>
+
+            <h5 class="fw-semibold mb-2">Categories:</h5>
+            <ul class="list-group mb-4">
+                @foreach (var item in Model.Categories)
+                {
+                    <li class="list-group-item">
+                        <strong>@item.Name</strong>
+                        <br />
+                        <small class="text-muted">@item.Description</small>
+                    </li>
+                }
+            </ul>
+
+            <!-- Add to basket button -->
+            <a class="btn btn-lg btn-primary px-4"
+               asp-controller="Home"
+               asp-action="AddToBasket"
+               asp-route-itemId="@Model.Product.BasketItemId">
+                <i class="bi bi-cart-plus"></i> Add to Basket
+            </a>
+        </div>
+    </div>
+</div>
+
+

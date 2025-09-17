@@ -21,10 +21,17 @@ namespace CodeWithArash.Data
         {
             modelBuilder.Entity<Models.ProductInCategories>()
                 .HasKey(i => new { i.ProductId, i.CategoryId }); // composite primary key
-            modelBuilder.Entity<Models.BasketItem>()
+
+            modelBuilder.Entity<Models.BasketItem>() // one to one relationship between BasketItem and Product
                 .HasOne(b => b.Product)
                 .WithOne(p => p.BasketItem)
                 .HasForeignKey<Models.BasketItem>(b => b.Id);
+
+            // The "money" type is only for SQL Server.
+            // modelBuilder.Entity<Models.BasketItem>() // configure Price property to use "money" data type in the database
+            //     .Property(b => b.Price)
+            //     .HasColumnType("money");
+
 
             #region Seed Data for Category Table
             modelBuilder.Entity<Models.Category>().HasData(new Models.Category
@@ -55,4 +62,3 @@ namespace CodeWithArash.Data
         }
     }
 }
-  

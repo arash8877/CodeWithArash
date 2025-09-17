@@ -12,7 +12,7 @@ namespace CodeWithArash.Models
         public int QuantityInStock { get; set; } 
 
         // Navigation properties ( create relationship between BasketItem and Product)
-        public required Product Product { get; set; } // each basket item is linked to a product
+        public Product? Product { get; set; } // each basket item is linked to a product
 
     
     }

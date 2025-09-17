@@ -12,8 +12,11 @@ namespace CodeWithArash.Models
         public required string Name { get; set; }
         public required string Description { get; set; }
 
+        // Foreign key for BasketItem
+        public int BasketItemId { get; set; }
+
         // Navigation properties ( create relationship between Product and other tables)
-        public required ICollection<ProductInCategories> ProductInCategories { get; set; } // many to many relationship between product and category
-        public required BasketItem BasketItem { get; set; } // each product can be linked to one basket item
+        public ICollection<ProductInCategories>? ProductInCategories { get; set; } // many to many relationship between product and category
+        public BasketItem? BasketItem { get; set; } // each product can be linked to one basket item
     }
 }

@@ -11,7 +11,7 @@ namespace CodeWithArash.Models
         public int CategoryId { get; set; }
 
         // Navigation properties ( create relationship between Product and Category)
-        public required Product Product { get; set; }
-        public required Category Category { get; set; }
+        public  Product? Product { get; set; }
+        public  Category? Category { get; set; }
     }
 }

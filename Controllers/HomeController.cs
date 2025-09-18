@@ -48,9 +48,42 @@ public class HomeController : Controller
         return View(viewModel);
     }
 
-    public IActionResult AddToBasket(int productId)
+public IActionResult AddToBasket(int productId)
+{
+    var product = _context.Products
+        .Include(p => p.BasketItem)
+        .SingleOrDefault(p => p.Id == productId);
+
+    if (product != null && product.BasketItem != null)
     {
-        var product = _context.Products.SingleOrDefault(p => p.Id == productId);
+        var cartItem = new CartItem
+        {
+            BasketItem = product.BasketItem,
+            Quantity = 1
+        };
+
+        _cart.AddItem(cartItem);
+    }
+
+    return RedirectToAction("ShowBasket"); 
+}
+
+
+    public IActionResult ShowBasket()
+    {
+        var cartViewModel = new CartViewModel
+        {
+            CartItems = _cart.CartItems,
+            OrderTotal = _cart.CartItems.Sum(i => i.GetTotalPrice())
+        };
+        return View(cartViewModel);
+    }
+
+    public IActionResult RemoveFromBasket(int productId)
+    {
+        var product = _context.Products
+        .Include(p => p.BasketItem)
+        .SingleOrDefault(p => p.Id == productId);
         if (product != null)
         {
             var cartItem = new CartItem
@@ -58,19 +91,9 @@ public class HomeController : Controller
                 BasketItem = product.BasketItem,
                 Quantity = 1
             };
-            _cart.AddItem(cartItem);
+            _cart.RemoveItem(cartItem);
         }
-        return RedirectToAction("ShowBasket"); // redirect to the basket view after adding an item
-    }
-
-    public IActionResult ShowBasket()
-    {
-        var cartViewModel = new CartViewModel()
-        {
-            CartItems = _cart.CartItems,
-            OrderTotal = _cart.CartItems.Sum(i => i.GetTotalPrice())
-        };
-        return View(cartViewModel);
+        return RedirectToAction("ShowBasket"); 
     }
 
 

@@ -24,7 +24,7 @@
             <td>@item.Quantity</td>
             <td>@item.GetTotalPrice()</td>
             <td>
-                <a asp-action="RemoveCart" asp-route-itemId="@item.BasketItem.Id">Remove</a>
+                <a asp-action="RemoveFromBasket" asp-route-productId="@item.BasketItem.Id">Remove</a>
             </td>
         </tr>
     }

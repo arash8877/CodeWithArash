@@ -6,30 +6,76 @@
 }
 
 
-<table class="table table-striped">
-    <thead class="thead-dark">
-    <tr>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th></th>
-    </tr>
-    </thead>
-    
-    <tbody>
-    @foreach (var item in Model.CartItems)
-    {
-        <tr>
-            <td>@item.BasketItem.Product.Name</td>
-            <td>@item.Quantity</td>
-            <td>@item.GetTotalPrice()</td>
-            <td>
-                <a asp-action="RemoveFromBasket" asp-route-productId="@item.BasketItem.Id">Remove</a>
-            </td>
-        </tr>
-    }
-    </tbody>
 
-</table>
-<h5>جمع کل : @Model.OrderTotal</h5>
+
+<div class="container py-5">
+    <h2 class="mb-4 fw-bold text-center">🛒 Your Basket</h2>
+
+    @if (!Model.CartItems.Any())
+    {
+        <div class="alert alert-info text-center shadow-sm">
+            Your basket is empty. <a asp-controller="Home" asp-action="Index">Start shopping →</a>
+        </div>
+    }
+    else
+    {
+        <table class="table table-hover align-middle shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.CartItems)
+                {
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="@($"/images/{item.BasketItem.Product.Id}.jpg")"
+                                     alt="@item.BasketItem.Product.Name"
+                                     class="img-thumbnail me-3"
+                                     style="width:70px;height:70px;object-fit:cover;" />
+                                <span class="fw-semibold">@item.BasketItem.Product.Name</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary">@item.Quantity</span>
+                        </td>
+                        <td class="fw-bold">@item.GetTotalPrice() kr.</td>
+                        <td>
+                            <a asp-action="RemoveFromBasket"
+                               asp-route-productId="@item.BasketItem.Id"
+                               class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash"></i> Remove
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-end mt-4">
+            <div class="card shadow-sm" style="min-width: 250px;">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">Order Summary</h5>
+                    <hr />
+                    <p class="d-flex justify-content-between mb-2">
+                        <span>Total:</span> 
+                        <span class="fw-bold">@Model.OrderTotal kr.</span>
+                    </p>
+                    <div class="d-grid">
+                        <a href="#" class="btn btn-success btn-lg">
+                            <i class="bi bi-credit-card"></i> Checkout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
 

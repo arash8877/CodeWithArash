@@ -2,6 +2,7 @@
 using CodeWithArash.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeWithArash.Migrations
 {
     [DbContext(typeof(CodeWithArashContext))]
-    partial class CodeWithArashContextModelSnapshot : ModelSnapshot
+    [Migration("20250918185935_UpdateProductCateg")]
+    partial class UpdateProductCateg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.9");

@@ -99,20 +99,15 @@ namespace CodeWithArash.Data
             );
 
             modelBuilder.Entity<Models.ProductInCategories>().HasData(
-                new Models.ProductInCategories { ProductId = 1, CategoryId = 1 },
-                new Models.ProductInCategories { ProductId = 1, CategoryId = 2 },
-                new Models.ProductInCategories { ProductId = 1, CategoryId = 3 },
-                new Models.ProductInCategories { ProductId = 1, CategoryId = 4 },
-                new Models.ProductInCategories { ProductId = 2, CategoryId = 1 },
-                new Models.ProductInCategories { ProductId = 2, CategoryId = 2 },
-                new Models.ProductInCategories { ProductId = 2, CategoryId = 3 },
-                new Models.ProductInCategories { ProductId = 2, CategoryId = 4 },
-                new Models.ProductInCategories { ProductId = 3, CategoryId = 1 },
-                new Models.ProductInCategories { ProductId = 3, CategoryId = 2 },
-                new Models.ProductInCategories { ProductId = 3, CategoryId = 3 },
-                new Models.ProductInCategories { ProductId = 3, CategoryId = 4 }
+               new Models.ProductInCategories { ProductId = 1, CategoryId = 1 },
+               // Product 2 only in Category 2
+               new Models.ProductInCategories { ProductId = 2, CategoryId = 2 },
+               new Models.ProductInCategories { ProductId = 2, CategoryId = 3 },
+               // Product 3 only in Category 3 and 4
+               new Models.ProductInCategories { ProductId = 3, CategoryId = 3 },
+               new Models.ProductInCategories { ProductId = 3, CategoryId = 4 }
 
-           
+
             );
 
             #endregion

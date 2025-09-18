@@ -1,5 +1,7 @@
 using CodeWithArash.Data;
 using Microsoft.EntityFrameworkCore;
+using CodeWithArash.Data.Repositories;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CodeWithArashContext>(options =>
     options.UseSqlite("Data Source=CodeWithArashDB.db"));
+
+builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+
 
 var app = builder.Build();
 

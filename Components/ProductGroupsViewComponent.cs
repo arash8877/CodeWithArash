@@ -2,32 +2,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CodeWithArash.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using CodeWithArash.Data;
+using CodeWithArash.Data.Repositories;
+using CodeWithArash.Models;
 
-namespace CodeWithArash.Models
+namespace CodeWithArash.Components
 {
     public class ProductGroupsViewComponent : ViewComponent
     {
-        private CodeWithArashContext _context;
-        public ProductGroupsViewComponent(CodeWithArashContext context) // constructor with dependency injection
+        private IGroupRepository _groupRepository;
+
+        public ProductGroupsViewComponent(IGroupRepository groupRepository)
         {
-            _context = context;
+            _groupRepository = groupRepository;
         }
+    
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var categories = _context.Categories
-                .Select(c => new ShowGroupViewModel
-                {
-                    GroupId = c.Id,
-                    GroupName = c.Name,
-                    ProductCount = c.ProductInCategories.Count(g => g.CategoryId == c.Id)
-                }).ToList();
-                
-            return View(categories);
+      
+            return View(_groupRepository.GetGroupForShow());
         }
-
-
     }
 }

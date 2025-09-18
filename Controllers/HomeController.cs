@@ -10,6 +10,7 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private CodeWithArashContext _context;
+    private static Cart _cart = new Cart(); // static cart instance to hold items added to the cart
 
     public HomeController(ILogger<HomeController> logger, CodeWithArashContext context) // constructor with dependency injection
     {
@@ -44,23 +45,41 @@ public class HomeController : Controller
             Product = product,
             Categories = categories
         };
-
         return View(viewModel);
     }
 
     public IActionResult AddToBasket(int productId)
     {
-        return null;
+        var product = _context.Products.SingleOrDefault(p => p.Id == productId);
+        if (product != null)
+        {
+            var cartItem = new CartItem
+            {
+                BasketItem = product.BasketItem,
+                Quantity = 1
+            };
+            _cart.AddItem(cartItem);
+        }
+        return RedirectToAction("ShowBasket"); // redirect to the basket view after adding an item
+    }
+
+    public IActionResult ShowBasket()
+    {
+        var cartViewModel = new CartViewModel()
+        {
+            CartItems = _cart.CartItems,
+            OrderTotal = _cart.CartItems.Sum(i => i.GetTotalPrice())
+        };
+        return View(cartViewModel);
     }
 
 
-
+    [Route("contact-us")] // this attribute decorates the action method, so that it can be accessed via /contact-us URL
     public IActionResult ContactUs()
     {
         return View();
     }
 
-    [Route("contact-us")] // this attribute decorates the action method, so that it can be accessed via /contact-us URL
     public IActionResult Privacy()
     {
         return View();

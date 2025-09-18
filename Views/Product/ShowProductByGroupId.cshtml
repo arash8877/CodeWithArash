@@ -6,3 +6,10 @@
 
 <h1>Products in group @ViewData["GroupName"]</h1>
 <hr/>
+
+    <div class="row justify-content-center g-4">
+        @foreach (var item in Model)
+        {
+           <partial name="_ProductCard" model="item" />
+        }
+    </div>

@@ -17,9 +17,17 @@ namespace CodeWithArash.Models
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            return View(_context.Categories); 
+            var categories = _context.Categories
+                .Select(c => new ShowGroupViewModel
+                {
+                    GroupId = c.Id,
+                    GroupName = c.Name,
+                    ProductCount = c.ProductInCategories.Count(g => g.CategoryId == c.Id)
+                }).ToList();
+                
+            return View(categories);
         }
-        
+
 
     }
 }

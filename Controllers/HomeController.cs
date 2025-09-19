@@ -12,7 +12,6 @@ public class HomeController : Controller
 {
   private readonly ILogger<HomeController> _logger;
   private CodeWithArashContext _context;
-  private static Cart _cart = new Cart(); // static cart instance to hold items added to the cart
 
   public HomeController(ILogger<HomeController> logger, CodeWithArashContext context) // constructor with dependency injection
   {
@@ -50,112 +49,87 @@ public class HomeController : Controller
     return View(viewModel);
   }
 
-  [Authorize] // only authenticated users can access this action
+  [Authorize]
   public IActionResult AddToBasket(int productId)
   {
     var product = _context.Products
         .Include(p => p.BasketItem)
         .SingleOrDefault(p => p.Id == productId);
 
-    if (product != null && product.BasketItem != null)
+    if (product == null || product.BasketItem == null)
+      return RedirectToAction("Index"); // Product not found, go back
+
+    int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+    // Get existing order or create a new one
+    var order = _context.Orders
+        .Include(o => o.OrderDetails)
+        .FirstOrDefault(o => o.UserId == userId && !o.IsClosed);
+
+    if (order == null)
     {
-      // -------------------------------
-      // 1️⃣ Add to in-memory cart (_cart)
-      // -------------------------------
-      var cartItem = _cart.CartItems.FirstOrDefault(ci => ci.BasketItem.Id == product.BasketItem.Id);
-      if (cartItem != null)
+      order = new OrderModel
       {
-        cartItem.Quantity += 1;
-      }
-      else
-      {
-        _cart.CartItems.Add(new CartItem
-        {
-          BasketItem = product.BasketItem,
-          Quantity = 1
-        });
-      }
-
-      // -------------------------------
-      // 2️⃣ Persist to database (optional)
-      // -------------------------------
-      int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier).ToString());
-      var order = _context.Orders.FirstOrDefault(o => o.UserId == userId && !o.IsClosed);
-
-      if (order != null)
-      {
-        var orderDetail = _context.OrderDetails
-            .FirstOrDefault(od => od.OrderId == order.OrderId && od.ProductId == product.Id);
-
-        if (orderDetail != null)
-        {
-          orderDetail.Count += 1;
-          _context.OrderDetails.Update(orderDetail);
-        }
-        else
-        {
-          _context.OrderDetails.Add(new OrderDetailModel
-          {
-            OrderId = order.OrderId,
-            ProductId = product.Id,
-            Price = product.BasketItem.Price,
-            Count = 1
-          });
-        }
-      }
-      else
-      {
-        order = new OrderModel
-        {
-          UserId = userId,
-          OrderDate = DateTime.Now,
-          IsClosed = false
-        };
-        _context.Orders.Add(order);
-        _context.SaveChanges(); // Save to generate OrderId
-
-        _context.OrderDetails.Add(new OrderDetailModel
-        {
-          OrderId = order.OrderId,
-          ProductId = product.Id,
-          Price = product.BasketItem.Price,
-          Count = 1
-        });
-      }
-
-      _context.SaveChanges();
+        UserId = userId,
+        OrderDate = DateTime.Now,
+        IsClosed = false,
+        OrderDetails = new List<OrderDetailModel>()
+      };
+      _context.Orders.Add(order);
+      _context.SaveChanges(); // Save to generate OrderId
     }
 
+    // Add product to order details
+    var orderDetail = order.OrderDetails
+        .FirstOrDefault(od => od.ProductId == product.Id);
+
+    if (orderDetail != null)
+    {
+      orderDetail.Count += 1;
+      _context.OrderDetails.Update(orderDetail);
+    }
+    else
+    {
+      _context.OrderDetails.Add(new OrderDetailModel
+      {
+        OrderId = order.OrderId,
+        ProductId = product.Id,
+        Price = product.BasketItem.Price,
+        Count = 1
+      });
+    }
+
+    _context.SaveChanges();
     return RedirectToAction("ShowBasket");
   }
 
-
+  [Authorize]
   public IActionResult ShowBasket()
   {
-    var cartViewModel = new CartViewModel
-    {
-      CartItems = _cart.CartItems,
-      OrderTotal = _cart.CartItems.Sum(i => i.GetTotalPrice())
-    };
-    return View(cartViewModel);
+    int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+    var order = _context.Orders
+    .Where(o => o.UserId == userId && !o.IsClosed)
+        .Include(o => o.OrderDetails)
+        .ThenInclude(od => od.Product)
+        .FirstOrDefault();
+
+    return View(order);
   }
 
-  public IActionResult RemoveFromBasket(int productId)
-  {
-    var product = _context.Products
-    .Include(p => p.BasketItem)
-    .SingleOrDefault(p => p.Id == productId);
-    if (product != null)
+ [Authorize]
+public IActionResult RemoveFromBasket(int OrderDetailId)
+{
+    var orderDetail = _context.OrderDetails.Find(OrderDetailId);
+
+    if (orderDetail != null)
     {
-      var cartItem = new CartItem
-      {
-        BasketItem = product.BasketItem,
-        Quantity = 1
-      };
-      _cart.RemoveItem(cartItem);
+        _context.OrderDetails.Remove(orderDetail); // safer than _context.Remove(orderDetail)
+        _context.SaveChanges();
     }
+
     return RedirectToAction("ShowBasket");
-  }
+}
 
 
   [Route("contact-us")] // this attribute decorates the action method, so that it can be accessed via /contact-us URL

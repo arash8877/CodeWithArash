@@ -1,4 +1,4 @@
-@model CodeWithArash.Models.CartViewModel;
+@model CodeWithArash.Models.OrderModel;
 
 
 @{
@@ -11,7 +11,7 @@
 <div class="container py-5">
     <h2 class="mb-4 fw-bold text-center">🛒 Your Basket</h2>
 
-    @if (!Model.CartItems.Any())
+    @if (!Model.OrderDetails.Any())
     {
         <div class="alert alert-info text-center shadow-sm">
             Your basket is empty. <a asp-controller="Home" asp-action="Index">Start shopping →</a>
@@ -30,25 +30,25 @@
             </thead>
 
             <tbody>
-                @foreach (var item in Model.CartItems)
+                @foreach (var item in Model.OrderDetails)
                 {
                     <tr>
                         <td>
                             <div class="d-flex align-items-center">
-                                <img src="@($"/images/{item.BasketItem.Product.Id}.jpg")"
-                                     alt="@item.BasketItem.Product.Name"
+                                <img src="@($"/images/{item.Product.Id}.jpg")"
+                                     alt="@item.Product.Name"
                                      class="img-thumbnail me-3"
                                      style="width:70px;height:70px;object-fit:cover;" />
-                                <span class="fw-semibold">@item.BasketItem.Product.Name</span>
+                                <span class="fw-semibold">@item.Product.Name</span>
                             </div>
                         </td>
                         <td>
-                            <span class="badge bg-secondary">@item.Quantity</span>
+                            <span class="badge bg-secondary">@item.Count</span>
                         </td>
-                        <td class="fw-bold">@item.GetTotalPrice() kr.</td>
+                        <td class="fw-bold">@(item.Count * item.Price) kr.</td>
                         <td>
                             <a asp-action="RemoveFromBasket"
-                               asp-route-productId="@item.BasketItem.Id"
+                               asp-route-OrderDetailId="@item.OrderDetailId"
                                class="btn btn-sm btn-outline-danger">
                                 <i class="bi bi-trash"></i> Remove
                             </a>
@@ -65,7 +65,7 @@
                     <hr />
                     <p class="d-flex justify-content-between mb-2">
                         <span>Total:</span> 
-                        <span class="fw-bold">@Model.OrderTotal kr.</span>
+                        <span class="fw-bold">@Model.OrderDetails.Sum(s => s.Count * s.Price) kr.</span>
                     </p>
                     <div class="d-grid">
                         <a href="#" class="btn btn-success btn-lg">

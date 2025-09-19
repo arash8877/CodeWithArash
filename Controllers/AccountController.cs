@@ -61,21 +61,22 @@ namespace CodeWithArash.Controllers
     #region Login
     public IActionResult Login()
     {
-      return View();
+      return View(new LoginViewModel());
     }
-    [HttpGet]
+
+    [HttpPost]
     public IActionResult Login(LoginViewModel login)
     {
       if (!ModelState.IsValid)
         return View(login);
 
-      // Authentication logic would go here
+      // Authentication logic here
 
       return RedirectToAction("Index", "Home");
     }
- 
     #endregion
-  
+
+
 
   }
 }

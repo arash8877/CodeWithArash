@@ -3,6 +3,7 @@ using System;
 using CodeWithArash.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeWithArash.Migrations
 {
     [DbContext(typeof(CodeWithArashContext))]
-    partial class CodeWithArashContextModelSnapshot : ModelSnapshot
+    [Migration("20250919152940_changeAddOrder")]
+    partial class changeAddOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.9");
@@ -140,9 +143,12 @@ namespace CodeWithArash.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("UsersUserId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("OrderId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UsersUserId");
 
                     b.ToTable("Orders");
                 });
@@ -293,13 +299,13 @@ namespace CodeWithArash.Migrations
 
             modelBuilder.Entity("CodeWithArash.Models.OrderModel", b =>
                 {
-                    b.HasOne("CodeWithArash.Models.Users", "User")
+                    b.HasOne("CodeWithArash.Models.Users", "Users")
                         .WithMany("Orders")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UsersUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("CodeWithArash.Models.ProductInCategories", b =>

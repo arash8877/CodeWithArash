@@ -1,9 +1,10 @@
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using CodeWithArash.Models;
-using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using CodeWithArash.Data;
+using CodeWithArash.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodeWithArash.Controllers;
 
@@ -48,7 +49,7 @@ public class HomeController : Controller
     };
     return View(viewModel);
   }
-  
+
   [Authorize] // only authenticated users can access this action
   public IActionResult AddToBasket(int productId)
   {
@@ -58,13 +59,71 @@ public class HomeController : Controller
 
     if (product != null && product.BasketItem != null)
     {
-      var cartItem = new CartItem
+      // -------------------------------
+      // 1️⃣ Add to in-memory cart (_cart)
+      // -------------------------------
+      var cartItem = _cart.CartItems.FirstOrDefault(ci => ci.BasketItem.Id == product.BasketItem.Id);
+      if (cartItem != null)
       {
-        BasketItem = product.BasketItem,
-        Quantity = 1
-      };
+        cartItem.Quantity += 1;
+      }
+      else
+      {
+        _cart.CartItems.Add(new CartItem
+        {
+          BasketItem = product.BasketItem,
+          Quantity = 1
+        });
+      }
 
-      _cart.AddItem(cartItem);
+      // -------------------------------
+      // 2️⃣ Persist to database (optional)
+      // -------------------------------
+      int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier).ToString());
+      var order = _context.Orders.FirstOrDefault(o => o.UserId == userId && !o.IsClosed);
+
+      if (order != null)
+      {
+        var orderDetail = _context.OrderDetails
+            .FirstOrDefault(od => od.OrderId == order.OrderId && od.ProductId == product.Id);
+
+        if (orderDetail != null)
+        {
+          orderDetail.Count += 1;
+          _context.OrderDetails.Update(orderDetail);
+        }
+        else
+        {
+          _context.OrderDetails.Add(new OrderDetailModel
+          {
+            OrderId = order.OrderId,
+            ProductId = product.Id,
+            Price = product.BasketItem.Price,
+            Count = 1
+          });
+        }
+      }
+      else
+      {
+        order = new OrderModel
+        {
+          UserId = userId,
+          OrderDate = DateTime.Now,
+          IsClosed = false
+        };
+        _context.Orders.Add(order);
+        _context.SaveChanges(); // Save to generate OrderId
+
+        _context.OrderDetails.Add(new OrderDetailModel
+        {
+          OrderId = order.OrderId,
+          ProductId = product.Id,
+          Price = product.BasketItem.Price,
+          Count = 1
+        });
+      }
+
+      _context.SaveChanges();
     }
 
     return RedirectToAction("ShowBasket");

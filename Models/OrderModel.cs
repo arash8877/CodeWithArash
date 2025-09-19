@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 
 namespace CodeWithArash.Models
 {
@@ -18,11 +18,6 @@ namespace CodeWithArash.Models
 
 
     public Users Users { get; set; }
-  
-
-        
-
-
-
+    public List<OrderDetailModel> OrderDetails { get; set; }
   }
 }

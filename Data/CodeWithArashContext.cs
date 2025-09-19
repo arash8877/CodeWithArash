@@ -17,6 +17,8 @@ namespace CodeWithArash.Data
     public DbSet<Models.BasketItem> BasketItems { get; set; } // DbSet create a table in db for BasketItem model
     public DbSet<Models.ProductInCategories> ProductInCategories { get; set; } // DbSet create a table in db for ProductInCategories model
     public DbSet<Models.Users> Users { get; set; } // DbSet create a table in db for Users model
+    public DbSet<Models.OrderModel> Orders { get; set; } // DbSet create a table in db for OrderModel model
+    public DbSet<Models.OrderDetailModel> OrderDetails { get; set; } 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
       modelBuilder.Entity<Models.ProductInCategories>()

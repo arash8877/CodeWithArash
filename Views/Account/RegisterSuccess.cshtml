@@ -1,0 +1,38 @@
+@model CodeWithArash.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Registration Success";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg rounded-4 border-0 text-center">
+                <div class="card-header bg-success text-white fw-bold fs-4 rounded-top-4">
+                    Registration Successful!
+                </div>
+                <div class="card-body">
+                    <p class="lead">
+                        Thank you for registering, <span class="fw-semibold">@Model.Email</span>.
+                    </p>
+                    <p class="text-muted">
+                        You can now log in and start exploring our courses.
+                    </p>
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-primary btn-lg rounded-pill shadow-sm mt-3">
+                        Go to Login
+                    </a>
+                </div>
+                <div class="card-footer text-muted">
+                    &copy; 2025 - CodeWithArash
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Optional small tweaks for responsiveness */
+    .card-body p.lead {
+        font-size: 1.1rem;
+    }
+</style>

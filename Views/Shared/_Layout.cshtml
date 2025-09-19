@@ -26,20 +26,33 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3 row">
+<main role="main" class="pb-3 row">
+    @if (ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" &&
+         ViewContext.RouteData.Values["Action"]?.ToString() == "Index")
+    {
         <div class="col-md-3">
-         @await Component.InvokeAsync("ProductGroups")
+            @await Component.InvokeAsync("ProductGroups")
         </div>
         <div class="col-md-9">
             @RenderBody()
         </div>
-        </main>
+    }
+    else
+    {
+        <div class="col-12">
+            @RenderBody()
+        </div>
+    }
+</main>
     </div>
 
     <footer class="border-top footer text-muted">

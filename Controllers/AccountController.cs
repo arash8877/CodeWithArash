@@ -6,7 +6,7 @@ using CodeWithArash.Data;
 
 namespace CodeWithArash.Controllers;
 
-public class AccountControllers : Controller
+public class AccountController : Controller
 {
   public IActionResult Register()
   {

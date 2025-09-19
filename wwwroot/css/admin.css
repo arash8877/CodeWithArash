@@ -61,3 +61,56 @@ main {
     width: calc(100vw - 200px);
     padding: 50px;
 }
+
+/* Admin Layout Styles */
+.admin-header {
+    background-color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+}
+
+.admin-header .nav-link {
+    color: #495057;
+    font-weight: 500;
+    margin-left: 1rem;
+}
+
+.admin-header .nav-link:hover {
+    color: #0d6efd;
+}
+
+/* Products Table Styles */
+table.table-hover tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+img.img-thumbnail {
+    max-width: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Action Buttons */
+table tbody td .btn {
+    font-size: 0.9rem;
+    padding: 0.375rem 0.75rem;
+    white-space: nowrap;
+}
+
+/* Page Responsiveness */
+@media (max-width: 768px) {
+    .d-flex.flex-column.align-items-start {
+        align-items: center;
+        text-align: center;
+    }
+
+    .d-flex.flex-column.align-items-start .btn {
+        margin-top: 10px;
+    }
+
+    table tbody td .d-flex {
+        flex-direction: column;
+    }
+}
+

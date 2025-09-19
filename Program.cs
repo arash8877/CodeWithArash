@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<CodeWithArashContext>(options =>
     options.UseSqlite("Data Source=CodeWithArashDB.db"));
+builder.Services.AddRazorPages();
+
 
 // Register repositories
 builder.Services.AddScoped<IGroupRepository, GroupRepository>();
@@ -50,5 +52,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+app.MapRazorPages();
 
 app.Run();

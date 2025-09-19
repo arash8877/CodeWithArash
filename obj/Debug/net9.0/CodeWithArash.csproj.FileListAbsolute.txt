@@ -254,3 +254,4 @@
 /Users/elahe/Documents/Arash-code/Net/CodeWithArash/obj/Debug/net9.0/CodeWithArash.csproj.AssemblyReference.cache
 /Users/elahe/Documents/Arash-code/Net/CodeWithArash/obj/Debug/net9.0/CodeWith.E2982BFA.Up2Date
 /Users/elahe/Documents/Arash-code/Net/CodeWithArash/bin/Debug/net9.0/.prettierrc.json
+/Users/elahe/Documents/Arash-code/Net/CodeWithArash/obj/Debug/net9.0/compressed/w8rya4cvwx-13t69n8w3b.gz

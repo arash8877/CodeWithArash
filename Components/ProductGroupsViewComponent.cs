@@ -10,20 +10,20 @@ using CodeWithArash.Models;
 
 namespace CodeWithArash.Components
 {
-    public class ProductGroupsViewComponent : ViewComponent
+  public class ProductGroupsViewComponent : ViewComponent
+  {
+    private IGroupRepository _groupRepository;
+
+    public ProductGroupsViewComponent(IGroupRepository groupRepository)
     {
-        private IGroupRepository _groupRepository;
-
-        public ProductGroupsViewComponent(IGroupRepository groupRepository)
-        {
-            _groupRepository = groupRepository;
-        }
-    
-
-        public async Task<IViewComponentResult> InvokeAsync()
-        {
-      
-            return View(_groupRepository.GetGroupForShow());
-        }
+      _groupRepository = groupRepository;
     }
+
+
+    public async Task<IViewComponentResult> InvokeAsync()
+    {
+
+      return View(_groupRepository.GetGroupForShow());
+    }
+  }
 }

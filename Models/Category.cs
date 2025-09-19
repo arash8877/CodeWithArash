@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace CodeWithArash.Models
 {
-    public class Category
-    {
-        public int Id { get; set; }
-        public required string Name { get; set; }
-        public required string Description { get; set; }
-        public ICollection<ProductInCategories>? ProductInCategories { get; set; } // many to many relationship between product and category
-    
-    }
+  public class Category
+  {
+    public int Id { get; set; }
+    public required string Name { get; set; }
+    public required string Description { get; set; }
+    public ICollection<ProductInCategories>? ProductInCategories { get; set; } // many to many relationship between product and category
+
+  }
 }

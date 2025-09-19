@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 
 namespace CodeWithArash.Models
 {
-    public class CartViewModel
+  public class CartViewModel
+  {
+    public CartViewModel()
     {
-        public CartViewModel()
-        {
-            CartItems = new List<CartItem>();
-        }
-        public List<CartItem> CartItems { get; set; }
-        public decimal OrderTotal { get; set; }
+      CartItems = new List<CartItem>();
     }
+    public List<CartItem> CartItems { get; set; }
+    public decimal OrderTotal { get; set; }
+  }
 }

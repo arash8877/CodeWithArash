@@ -1,8 +1,8 @@
 {
-  // Auto-format on save
+  // Auto format on save
   "editor.formatOnSave": true,
 
-  // Prettier as default formatter for JS/JSON/HTML/CSS
+  // Prettier as default formatter for frontend files
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -19,8 +19,17 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 
-  // OmniSharp as default formatter for C#
+  // C# & Razor use OmniSharp formatter
   "[csharp]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp"
-  }
+  },
+  "[razor]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+
+  // Optional: ensure C# editor features work well
+  "omnisharp.enableEditorConfigSupport": true,
+  "omnisharp.enableRoslynAnalyzers": true,
+  "omnisharp.enableImportCompletion": true,
+  "omnisharp.organizeImportsOnFormat": true
 }

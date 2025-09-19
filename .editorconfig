@@ -1,9 +1,15 @@
 root = true
 
-[*.cs]
+[*]
 indent_style = space
-indent_size = 4
+indent_size = 2
 insert_final_newline = true
-csharp_new_line_before_open_brace = all
+
+[*.cs]
+csharp_indent_case_contents = true
 csharp_indent_switch_labels = true
-dotnet_sort_system_directives_first = true
+csharp_new_line_before_open_brace = all
+csharp_prefer_braces = true:suggestion
+
+[*.cshtml]
+indent_size = 2

@@ -8,10 +8,21 @@ namespace CodeWithArash.Controllers;
 
 public class AccountControllers : Controller
 {
-    public IActionResult Register()
+  public IActionResult Register()
+  {
+    return View();
+  }
+
+  [HttpPost]
+  public IActionResult Register(RegisterViewModel register)
+  {
+    if (ModelState.IsValid)
     {
-        return View();
+      // Save to database
+      return RedirectToAction("Index", "Home");
     }
+    return View(register);
+  }
 
 
 

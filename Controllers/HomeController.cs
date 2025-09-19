@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using CodeWithArash.Models;
 using Microsoft.EntityFrameworkCore;
 using CodeWithArash.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CodeWithArash.Controllers;
 
@@ -47,7 +48,8 @@ public class HomeController : Controller
     };
     return View(viewModel);
   }
-
+  
+  [Authorize] // only authenticated users can access this action
   public IActionResult AddToBasket(int productId)
   {
     var product = _context.Products

@@ -1,7 +1,10 @@
 using System;
-using Microsoft.AspNetCore.Mvc;
-using CodeWithArash.Models;
+using System.Security.Claims;
 using CodeWithArash.Data.Repositories;
+using CodeWithArash.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CodeWithArash.Controllers
 {
@@ -74,11 +77,40 @@ namespace CodeWithArash.Controllers
       if (user == null)
       {
         ModelState.AddModelError("Email", "Email or Password is incorrect!");
-        return View(login);}
+        return View(login);
+      }
+
+      var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                new Claim(ClaimTypes.Name, user.Email),
+               // new Claim("CodeMeli", user.Email),
+
+            };
+      var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+      var principal = new ClaimsPrincipal(identity);
+
+      var properties = new AuthenticationProperties
+      {
+        IsPersistent = login.RememberMe
+      };
+
+      HttpContext.SignInAsync(principal, properties);
+
+
 
       return RedirectToAction("Index", "Home");
+
+
     }
     #endregion
+
+    public IActionResult Logout()
+    {
+      HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+      return RedirectToAction("Login", "Account");
+    }
 
 
 

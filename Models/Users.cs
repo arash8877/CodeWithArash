@@ -16,5 +16,6 @@ namespace CodeWithArash.Models
     public required string Password { get; set; }
     public required DateTime RegisterTime { get; set; }
     public Boolean IsAdmin { get; set; }
+    public List<OrderModel> Orders { get; set; }
   }
 }

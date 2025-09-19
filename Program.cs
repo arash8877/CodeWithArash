@@ -11,6 +11,7 @@ builder.Services.AddDbContext<CodeWithArashContext>(options =>
     options.UseSqlite("Data Source=CodeWithArashDB.db"));
 
 builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 
 var app = builder.Build();

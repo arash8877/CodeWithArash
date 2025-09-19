@@ -70,7 +70,11 @@ namespace CodeWithArash.Controllers
       if (!ModelState.IsValid)
         return View(login);
 
-      // Authentication logic here
+      var user = _userRepository.GetUserForLogin(login.Email.ToLower(), login.Password);
+      if (user == null)
+      {
+        ModelState.AddModelError("Email", "Email or Password is incorrect!");
+        return View(login);}
 
       return RedirectToAction("Index", "Home");
     }

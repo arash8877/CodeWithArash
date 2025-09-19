@@ -10,6 +10,7 @@ namespace CodeWithArash.Data.Repositories
   {
     bool IsUserExist(string email);
     void AddUser(Users user);
+    Users GetUserForLogin(string email, string password);
   }
 
   public class UserRepository : IUserRepository
@@ -31,7 +32,10 @@ namespace CodeWithArash.Data.Repositories
       _context.Users.Add(user);
       _context.SaveChanges();
     }
+
+    public Users GetUserForLogin(string email, string password)
+    {
+      return _context.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
+    }
   }
-
-
 }

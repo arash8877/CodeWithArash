@@ -1,0 +1,57 @@
+@model CodeWithArash.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm rounded-4 border-0">
+                <div class="card-header bg-primary text-white text-center fw-bold fs-4 rounded-top">
+                    Welcome Back
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-center text-muted mb-4">
+                        Enter your credentials to access your account
+                    </p>
+
+                    <form asp-action="Login" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control form-control-lg" placeholder="Enter your email" />
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label"></label>
+                            <input asp-for="Password" class="form-control form-control-lg" placeholder="Enter your password" />
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" asp-for="RememberMe" />
+                            <label class="form-check-label" asp-for="RememberMe">Remember me</label>
+                        </div>
+
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm">
+                                Login
+                            </button>
+                        </div>
+
+                        <p class="text-center text-muted mb-0">
+                            Don’t have an account? <a asp-controller="Account" asp-action="Register">Register here</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

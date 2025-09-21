@@ -1,33 +1,37 @@
+@*
+    _Layout.cshtml for Admin Panel
+    - Responsive with Bootstrap 5
+    - LTR support
+    - Sidebar + Top Navbar
+*@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Admin Panel</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title - Admin Panel</title>
+
+    <!-- Bootstrap 5 LTR -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
     <link href="~/css/admin.css" rel="stylesheet" />
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 
     <!-- Navbar -->
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-            <div class="container">
-                <a class="navbar-brand fw-bold fs-4" href="/">Admin Panel</a>
-                
-                <!-- Hamburger for mobile -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar" aria-controls="adminNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold" href="/">Admin Panel</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar" aria-controls="adminNavbar" aria-expanded="false" aria-label="Menu">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <!-- Navbar links -->
                 <div class="collapse navbar-collapse" id="adminNavbar">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+                            <a class="nav-link active" href="/">Dashboard</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Orders</a>
@@ -36,7 +40,7 @@
                             <a class="nav-link" href="#">Users</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Logout</a>
+                            <a class="nav-link text-danger" href="/Account/Logout">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -44,17 +48,38 @@
         </nav>
     </header>
 
-    <!-- Main content -->
-    <main class="admin-main container my-5">
-        @RenderBody()
-    </main>
+    <!-- Content with Sidebar -->
+    <div class="container-fluid flex-grow-1">
+        <div class="row">
+            <!-- Sidebar -->
+            <aside class="col-md-3 col-lg-2 bg-light border-end p-3">
+                <h6 class="text-muted">Menu</h6>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">🏠 Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">📦 Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">👥 Users</a>
+                    </li>
+                </ul>
+            </aside>
+
+            <!-- Main content -->
+            <main class="col-md-9 col-lg-10 p-4">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
 
     <!-- Footer -->
-    <footer class="text-center py-4 text-muted bg-light mt-auto">
-        &copy; @DateTime.Now.Year CodeWithArash Admin
+    <footer class="bg-light text-center py-3 mt-auto border-top">
+        <small>&copy; @DateTime.Now.Year - Admin Panel</small>
     </footer>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

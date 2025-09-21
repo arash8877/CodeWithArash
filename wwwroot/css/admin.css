@@ -1,3 +1,4 @@
+/* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -8,79 +9,33 @@ body {
     font-family: "Segoe UI", Arial, Helvetica, sans-serif;
 }
 
-header {
-    width: 100vw;
-    height: 48px;
-    padding-right: 25px;
-    padding-left: 25px;
-    background-color: #343a40;
-    color: #fff;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-header a {
-    display: block;
-    color: #fff;
-    text-decoration: none;
-}
-
-.container {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: top;
-}
-
-nav {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    height: calc(100vh - 48px);
-    width: 200px;
-    background-color: #f8f9fa;
-    color: #212529;
-}
-
-nav ul {
-    list-style: none;
-}
-
-nav ul li {
-    padding: 10px 25px;
-}
-
-.nav-item {
-    color: #212529;
-    text-decoration: none;
-}
-
-main {
-    width: calc(100vw - 200px);
-    padding: 50px;
-}
-
-/* Admin Layout Styles */
+/* --- NAVBAR (Bootstrap takes control) --- */
 .admin-header {
     background-color: #fff;
     position: sticky;
     top: 0;
     z-index: 1030;
+    border-bottom: 1px solid #dee2e6;
 }
 
 .admin-header .nav-link {
     color: #495057;
     font-weight: 500;
     margin-left: 1rem;
+    transition: color 0.2s ease-in-out;
 }
 
-.admin-header .nav-link:hover {
+.admin-header .nav-link:hover,
+.admin-header .nav-link.active {
     color: #0d6efd;
 }
 
-/* Products Table Styles */
+/* --- MAIN CONTENT AREA --- */
+main.admin-main {
+    padding: 2rem;
+}
+
+/* --- PRODUCTS TABLE --- */
 table.table-hover tbody tr:hover {
     background-color: #f1f3f5;
 }
@@ -91,26 +46,77 @@ img.img-thumbnail {
     border-radius: 8px;
 }
 
-/* Action Buttons */
+/* --- ACTION BUTTONS --- */
 table tbody td .btn {
     font-size: 0.9rem;
     padding: 0.375rem 0.75rem;
     white-space: nowrap;
 }
 
-/* Page Responsiveness */
+/* Make flex container inside table cells fully cover the cell */
+/* Make actions div transparent for hover to show fully */
+table tbody td .action-buttons {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+
+
+
+
+/* --- RESPONSIVENESS --- */
 @media (max-width: 768px) {
-    .d-flex.flex-column.align-items-start {
+    /* Stack table action buttons vertically */
+    table tbody td .d-flex {
+        flex-direction: column;
+    }
+
+    /* Center heading + Add Product button on small screens */
+    .d-flex.flex-wrap.gap-3 {
+        flex-direction: column;
         align-items: center;
         text-align: center;
     }
 
-    .d-flex.flex-column.align-items-start .btn {
+    .d-flex.flex-wrap.gap-3 .btn {
         margin-top: 10px;
-    }
-
-    table tbody td .d-flex {
-        flex-direction: column;
     }
 }
 
+/* --- OPTIONAL SIDEBAR LAYOUT (scoped, won’t break navbar) --- */
+.sidebar-layout {
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar-layout nav {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+    padding-top: 1rem;
+}
+
+.sidebar-layout nav ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.sidebar-layout nav ul li {
+    padding: 10px 20px;
+}
+
+.sidebar-layout nav a {
+    color: #212529;
+    text-decoration: none;
+}
+
+.sidebar-layout nav a:hover {
+    color: #0d6efd;
+}
